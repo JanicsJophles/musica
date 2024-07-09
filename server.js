@@ -7,7 +7,7 @@ require('dotenv').config();
 
 
 const app = express();
-const port = 3000;
+
 const LASTFM_API_KEY = process.env.LASTFM_API_KEY;
 const LASTFM_SHARED_SECRET = process.env.LASTFM_SHARED_SECRET;
 const REDIRECT_URI = process.env.REDIRECT_URI;
@@ -86,6 +86,6 @@ app.get('/callback', async (req, res) => {
 });
 
 
-app.listen(port, () => {
-   console.log(`Server is running on https://krishanator.com:${port}`);
+app.listen(() => {
+   console.log(`Server is running on https://api.krishanator.com/`);
 });

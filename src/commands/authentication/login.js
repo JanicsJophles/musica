@@ -7,7 +7,7 @@ module.exports = {
        const discordUserId = interaction.user.id;
       
        // Construct the authentication URL
-       const authUrl = `https://www.last.fm/api/auth/?api_key=${LASTFM_API_KEY}&cb=${encodeURIComponent(`${REDIRECT_URI}?user=${discordUserId}`)}`;
+       const authUrl = `https://api.krishanator.com/auth?user=${discordUserId}`;
 
 
        await interaction.reply(`Please authenticate with Last.fm by clicking [here](${authUrl}).`);
