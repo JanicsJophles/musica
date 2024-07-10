@@ -151,7 +151,7 @@ await rest.delete(
 ## 🚨 Issues and Contributions
 
 - Report issues or request features [here](https://github.com/JanicsJophles/musica/issues).
-- Contributions are welcome! Make sure to fork the repository and create a pull request.
+- Contributions are super welcome! Make sure to fork the repository and create a pull request.
 
 ## 🎉 Enjoy Your Bot!
 Thank you for using Musica. We hope it makes your Discord experience even more enjoyable with seamless integration to Last.fm! 🎧
