@@ -2,11 +2,12 @@ const express = require('express');
 const axios = require('axios');
 const crypto = require('crypto');
 const querystring = require('querystring');
-const db = require('./src/database');
+const db = require('./src/database'); // Assuming this is your database module
 require('dotenv').config();
+const path = require('path'); // Added path module for file path operations
 
 const app = express();
-const port = process.env.PORT || 3000;  // Use PORT from environment or default to 3000
+const port = process.env.PORT || 3000;
 const LASTFM_API_KEY = process.env.LASTFM_API_KEY;
 const LASTFM_SHARED_SECRET = process.env.LASTFM_SHARED_SECRET;
 const REDIRECT_URI = process.env.REDIRECT_URI;
@@ -21,7 +22,6 @@ if (!LASTFM_API_KEY || !LASTFM_SHARED_SECRET || !REDIRECT_URI) {
 function generateApiSig(params) {
     const keys = Object.keys(params).sort();
     const sigString = keys.map(key => key + params[key]).join('') + LASTFM_SHARED_SECRET;
-    console.log('Signature String:', sigString); // Log the complete string before hashing
     return crypto.createHash('md5').update(sigString, 'utf8').digest('hex');
 }
 
@@ -47,8 +47,6 @@ app.get('/callback', async (req, res) => {
 
         // Generating API signature
         const apiSig = generateApiSig(params);
-        console.log('Params for request:', params);
-        console.log('Generated API Signature:', apiSig);
 
         // URL-encode parameters
         const encodedParams = querystring.stringify({ ...params, api_sig: apiSig, format: 'json' });
@@ -59,9 +57,6 @@ app.get('/callback', async (req, res) => {
         const sessionKey = response.data.session.key;
         const username = response.data.session.name;
 
-        // Log the received username and session key for debugging
-        console.log('Received from Last.fm:', { username, sessionKey });
-
         // Save sessionKey and username to the database
         db.run(`INSERT OR REPLACE INTO users (discordUserId, lastFmUsername, lastFmSessionKey) VALUES (?, ?, ?)`,
             [user, username, sessionKey],
@@ -70,7 +65,8 @@ app.get('/callback', async (req, res) => {
                     console.error('Error saving user data to the database', err);
                     res.status(500).send('Error during authentication');
                 } else {
-                    res.send(`Authenticated as ${username}`);
+                    // Serve the authenticated.html file with username dynamically inserted
+                    res.sendFile(path.join(__dirname, 'authenticated.html'));
                 }
             }
         );
