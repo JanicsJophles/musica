@@ -1,4 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
+const { MessageEmbed, EmbedBuilder } = require('discord.js');
 require('dotenv').config();
 const db = require('../../database');
 
@@ -8,23 +9,44 @@ module.exports = {
         .setDescription('Authenticate with Last.fm'),
     async execute(interaction) {
         const discordUserId = interaction.user.id;
-
+        const image = "https://images.squarespace-cdn.com/content/v1/5e3cc11ed2bb072570aa443e/1613670108055-7A0ETH4TMY8KV08DAB6D/2013KanyeWest_Yeezus_600G030613-1.jpg"
         // Check if the user is already authenticated
         db.get('SELECT lastFmUsername FROM users WHERE discordUserId = ?', [discordUserId], (err, row) => {
             if (err) {
                 console.error('Database error:', err);
-                interaction.reply('There was an error checking your authentication status.');
+                const errorEmbed = new EmbedBuilder()
+                    .setColor('#FF0000')
+                    .setTitle('Error')
+                    .setDescription('There was an error checking your authentication status.')
+                    .setTimestamp()
+                    .setFooter({ text: 'Last.fm Authentication', iconURL: image });
+
+                interaction.reply({ embeds: [errorEmbed], ephemeral: true });
                 return;
             }
 
             if (row) {
-                interaction.reply(`You are already logged in as ${row.lastFmUsername}!`);
+                const loggedInEmbed = new EmbedBuilder()
+                    .setColor('#00FF00')
+                    .setTitle('Already Authenticated')
+                    .setDescription(`You are already logged in as ${row.lastFmUsername}!`)
+                    .setTimestamp()
+                    .setFooter({ text: 'Last.fm Authentication', iconURL: image });
+
+                interaction.reply({ embeds: [loggedInEmbed], ephemeral: true });
             } else {
                 const url = process.env.URL;
                 // Construct the authentication URL
                 const authUrl = `${url}auth?user=${discordUserId}`;
 
-                interaction.reply(`Please authenticate with Last.fm by clicking [here](${authUrl}).`);
+                const authEmbed = new EmbedBuilder()
+                    .setColor('#0000FF')
+                    .setTitle('Authenticate with Last.fm')
+                    .setDescription(`Please authenticate with Last.fm by clicking [here](${authUrl}).`)
+                    .setTimestamp()
+                    .setFooter({ text: 'Last.fm Authentication', iconURL: image });
+
+                interaction.reply({ embeds: [authEmbed], ephemeral: true });
             }
         });
     },
