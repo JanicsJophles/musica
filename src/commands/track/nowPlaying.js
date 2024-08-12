@@ -22,7 +22,7 @@ async function getUserData(discordUserId) {
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('nowplaying')
+        .setName('now-playing')
         .setDescription('Shows what you are currently listening to on Last.fm')
         .addStringOption(option =>
             option.setName('user')
