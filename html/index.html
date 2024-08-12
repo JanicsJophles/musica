@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Musica Bot</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/styles.css">
+    <script>
+        if (localStorage.getItem('darkMode') === 'true') {
+            document.documentElement.classList.add('dark-mode');
+            document.body.classList.add('dark-mode');
+        }
+    </script>
+</head>
+<body>
+    <div id="app-bar-container"></div>
+
+    <div class="container index-container">
+        <h1>Welcome to Musica Bot</h1>
+        <p>Your favorite music companion on Discord!</p>
+        <a href="https://discord.com/oauth2/authorize?client_id=1259560080886599752" class="invite-btn">Invite Bot</a>
+
+        <section class="features">
+            <h2>Main Features</h2>
+            <ul>
+                <li>Show your friends what you're listening to by using <code>/fm</code></li>
+                <li>Customize your <code>/fm</code> to make it unique with <code>/mode</code></li>
+                <li>Generate advanced image charts based on your listening history</li>
+                <li>Easily see genre and country info for your favorite artists</li>
+                <li>Get the Spotify, YouTube, or Genius link for any song</li>
+                <li>View all your Last.fm statistics through deep integration with Last.fm</li>
+                <li>Scrobble songs that other Discord bots are playing to your Last.fm account with our Music Bot Scrobbling</li>
+                <li>View and show off your Discogs collection</li>
+            </ul>
+        </section>
+
+        <section class="social-features">
+            <h2>Social Features</h2>
+            <ul>
+                <li>Use <code>/WhoKnows</code> in your server to see top listeners for artists and compete for crowns!</li>
+                <li>See what music is trending in your server for various time periods with our <code>/server</code> commands</li>
+                <li>Compare your taste with others and see who has the most similar music taste</li>
+                <li>Add friends and see what they've been listening to in <code>/friends</code></li>
+                <li>See how you stack up against anyone in the bot with our global commands</li>
+                <li>Use the affinity command to see who's taste is most similar to you</li>
+                <li>Play the jumble games together with friends</li>
+            </ul>
+        </section>
+
+        <section class="featured">
+            <h2>Featured</h2>
+            <p>Every hour we feature a random user with something they've recently listened to. Everyone is able to see this using the <code>/featured</code> command, and anyone who recently used the bot gets a chance to become featured!</p>
+            <p>The bot will also change its profile picture to the album cover of the feature. Want to be alerted when you get featured? Join our server and you'll get a ping.</p>
+        </section>
+
+        <section class="links">
+            <h2>Links</h2>
+            <ul>
+                <a href="https://krishanator.com"
+                    class="invite-btn" >The Creator's Portfolio</a>
+            </ul>
+        </section>
+    </div>
+
+    <script src="/html_scripts/app-bar.js"></script>
+</body>
+</html>

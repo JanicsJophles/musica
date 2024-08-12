@@ -2,9 +2,11 @@ const express = require('express');
 const axios = require('axios');
 const crypto = require('crypto');
 const querystring = require('querystring');
-const db = require('./src/database'); // Assuming this is your database module
+const db = require('./src/database');
 require('dotenv').config();
-const path = require('path'); // Added path module for file path operations
+const path = require('path');
+const cors = require('cors');
+const helmet = require('helmet');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -12,13 +14,17 @@ const LASTFM_API_KEY = process.env.LASTFM_API_KEY;
 const LASTFM_SHARED_SECRET = process.env.LASTFM_SHARED_SECRET;
 const REDIRECT_URI = process.env.REDIRECT_URI;
 
-// Check if required environment variables are set
+app.use(helmet());
+app.use(cors());
+app.use('/css', express.static(path.join(__dirname, 'css')));
+app.use('/html_scripts', express.static(path.join(__dirname, 'html_scripts')));
+app.use('/widgets', express.static(path.join(__dirname, 'widgets')));
+
 if (!LASTFM_API_KEY || !LASTFM_SHARED_SECRET || !REDIRECT_URI) {
     console.error('Error: Missing required environment variables');
     process.exit(1);
 }
 
-// Generates API signature needed for Last.fm requests
 function generateApiSig(params) {
     const keys = Object.keys(params).sort();
     const sigString = keys.map(key => key + params[key]).join('') + LASTFM_SHARED_SECRET;
@@ -45,35 +51,49 @@ app.get('/callback', async (req, res) => {
             token: token,
         };
 
-        // Generating API signature
         const apiSig = generateApiSig(params);
-
-        // URL-encode parameters
         const encodedParams = querystring.stringify({ ...params, api_sig: apiSig, format: 'json' });
-
         const response = await axios.get(`https://ws.audioscrobbler.com/2.0/?${encodedParams}`);
       
-        // Extract session key and username
         const sessionKey = response.data.session.key;
         const username = response.data.session.name;
 
-        // Save sessionKey and username to the database
-        db.run(`INSERT OR REPLACE INTO users (discordUserId, lastFmUsername, lastFmSessionKey) VALUES (?, ?, ?)`,
-            [user, username, sessionKey],
-            (err) => {
-                if (err) {
-                    console.error('Error saving user data to the database', err);
-                    res.status(500).send('Error during authentication');
-                } else {
-                    // Serve the authenticated.html file with username dynamically inserted
-                    res.sendFile(path.join(__dirname, 'authenticated.html'));
+        await new Promise((resolve, reject) => {
+            db.run(`INSERT OR REPLACE INTO users (discordUserId, lastFmUsername, lastFmSessionKey) VALUES (?, ?, ?)`,
+                [user, username, sessionKey],
+                (err) => {
+                    if (err) reject(err);
+                    else resolve();
                 }
-            }
-        );
+            );
+        });
+
+        res.redirect(`/authenticated.html?username=${encodeURIComponent(username)}`);
     } catch (error) {
         console.error(error.response ? error.response.data : error);
         res.status(500).send('Error during authentication');
     }
+});
+
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'html/index.html'));
+});
+
+app.get('/terms', (req, res) => {
+    res.sendFile(path.join(__dirname, 'html/terms.html'));
+});
+
+app.get('/privacy', (req, res) => {
+    res.sendFile(path.join(__dirname, 'html/privacy.html'));
+});
+
+app.get('/authenticated.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'html/authenticated.html'));
+});
+
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send('Something broke!');
 });
 
 app.listen(port, (err) => {

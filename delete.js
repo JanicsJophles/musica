@@ -13,12 +13,12 @@ const rest = new REST({ version: '10' }).setToken(token);
 
         // Fetch all existing commands for the guild
         const commands = await rest.get(
-            Routes.applicationGuildCommands(clientId, guildId)
+            Routes.applicationCommands(clientId)
         );
 
         // Delete each command concurrently
         await Promise.all(commands.map(command => 
-            rest.delete(`${Routes.applicationGuildCommands(clientId, guildId)}/${command.id}`)
+            rest.delete(`${Routes.applicationCommands(clientId)}/${command.id}`)
                 .then(() => console.log(`Deleted command ${command.name} with ID ${command.id}`))
                 .catch(error => console.error(`Failed to delete command ${command.name} with ID ${command.id}:`, error))
         ));

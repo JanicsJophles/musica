@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Musica - Privacy Policy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/styles.css">
+    <script>
+        if (localStorage.getItem('darkMode') === 'true') {
+            document.documentElement.classList.add('dark-mode');
+            document.body.classList.add('dark-mode');
+        }
+    </script>
+</head>
+<body>
+    <div id="app-bar-container"></div>
+
+    <div class="container">
+        <h1>Privacy Policy</h1>
+        <p>Last update: 2024-08-11</p>
+        <p>Changelog: Initial release of privacy policy</p>
+
+        <h2>What does Musica do?</h2>
+        <p>Musica is a Discord bot designed to enhance your music experience by integrating with Last.fm. It provides features such as tracking your recent plays, viewing server-wide music statistics, and more.</p>
+
+        <h2>What data do we store?</h2>
+        <p>When you log into Musica using your Last.fm account, the following data is stored:</p>
+        <ul>
+            <li><strong>Discord Data:</strong>
+                <ul>
+                    <li>Discord user ID</li>
+                    <li>Presence in the server</li>
+                    <li>Your nickname or username in that server</li>
+                </ul>
+            </li>
+            <li><strong>Last.fm Data:</strong>
+                <ul>
+                    <li>Username</li>
+                    <li>Scrobbles (plays), top artists, top albums, and top tracks</li>
+                    <li>Registration date</li>
+                    <li>Total scrobble count</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h2>Server Data:</h2>
+        <p>When Musica joins a server, we store the following information:</p>
+        <ul>
+            <li>Server name</li>
+            <li>Server ID</li>
+            <li>Members in the server who have logged into Musica</li>
+            <li>Nickname or username of members logged into Musica</li>
+        </ul>
+
+        <h2>Command Logs:</h2>
+        <p>When a command is used, we log the following data:</p>
+        <ul>
+            <li>Discord name or nickname of the user executing the command</li>
+            <li>Discord user ID</li>
+            <li>Server name</li>
+            <li>Discord server ID</li>
+            <li>Discord channel ID</li>
+            <li>The command text and options</li>
+        </ul>
+
+        <h2>Music Bot Scrobbling:</h2>
+        <p>If you've logged into Musica, it will scrobble (store) songs played by music bots in your server to your Last.fm profile by default. You can opt out of this feature by using the /botscrobbling command.</p>
+        <p>For this feature, Musica fetches the artist and track name from messages music bots send in your server. No message content is stored or processed otherwise.</p>
+
+        <h2>Purpose of Data Storage</h2>
+        <p>We store this data to identify who is using the bot, customize command outputs, and improve the performance of our commands.</p>
+        <p>Music data and server data are used to provide server-wide leaderboards and statistics, while command logs are used for debugging and helping users with issues.</p>
+
+        <h2>Data Retention</h2>
+        <p>We retain settings data, server data, and command logs indefinitely unless you request deletion or remove Musica from your server.</p>
+
+        <h2>Data Deletion</h2>
+        <p>You can delete your user data using the /remove command. To delete server data, simply remove the bot from your server.</p>
+        <p>Users can also request data deletion by contacting us via our support server.</p>
+
+        <h2>Infrastructure</h2>
+        <p>Musica is hosted on a secure server in a reliable data center, ensuring the safety and availability of your data.</p>
+
+        <h2>Contacting Us</h2>
+        <p>If you have any security concerns or questions, you can reach out to us through our support server, direct messages, or by opening an issue on our GitHub repository.</p>
+
+        <h2>Third-Party Services</h2>
+        <p>Musica integrates with the following third-party services:</p>
+        <ul>
+            <li>Last.fm</li>
+        </ul>
+
+        <h2>Additional Information</h2>
+        <p>Musica will never share your personal data with third-party services unless explicitly stated. If you have any further questions, feel free to contact us on Discord or open an issue on GitHub.</p>
+
+    </div>
+
+    <script src="/html_scripts/app-bar.js"></script>
+</body>
+</html>
