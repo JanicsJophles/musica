@@ -9,7 +9,7 @@ const cors = require('cors');
 const helmet = require('helmet');
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3000; // Change to 3000 before pushing code
 const LASTFM_API_KEY = process.env.LASTFM_API_KEY;
 const LASTFM_SHARED_SECRET = process.env.LASTFM_SHARED_SECRET;
 const REDIRECT_URI = process.env.REDIRECT_URI;

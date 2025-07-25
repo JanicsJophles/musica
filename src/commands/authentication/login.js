@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageEmbed, EmbedBuilder } = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 require('dotenv').config();
 const db = require('../../database');
 
@@ -9,7 +9,8 @@ module.exports = {
         .setDescription('Authenticate with Last.fm'),
     async execute(interaction) {
         const discordUserId = interaction.user.id;
-        const image = "https://images.squarespace-cdn.com/content/v1/5e3cc11ed2bb072570aa443e/1613670108055-7A0ETH4TMY8KV08DAB6D/2013KanyeWest_Yeezus_600G030613-1.jpg"
+        const image = "https://images.squarespace-cdn.com/content/v1/5e3cc11ed2bb072570aa443e/1613670108055-7A0ETH4TMY8KV08DAB6D/2013KanyeWest_Yeezus_600G030613-1.jpg";
+
         // Check if the user is already authenticated
         db.get('SELECT lastFmUsername FROM users WHERE discordUserId = ?', [discordUserId], (err, row) => {
             if (err) {
@@ -35,9 +36,11 @@ module.exports = {
 
                 interaction.reply({ embeds: [loggedInEmbed], ephemeral: true });
             } else {
-                const url = process.env.URL;
-                // Construct the authentication URL
-                const authUrl = `${url}auth?user=${discordUserId}`;
+                // Construct the base URL properly
+                let rawUrl = process.env.URL || '';
+                rawUrl = rawUrl.replace(/\/$/, ''); // remove trailing slash if present
+                const baseUrl = rawUrl.startsWith('http') ? rawUrl : `http://${rawUrl}`;
+                const authUrl = `${baseUrl}/auth?user=${discordUserId}`;
 
                 const authEmbed = new EmbedBuilder()
                     .setColor('#0000FF')
