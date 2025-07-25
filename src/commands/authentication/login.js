@@ -30,7 +30,7 @@ module.exports = {
                 const loggedInEmbed = new EmbedBuilder()
                     .setColor('#00FF00')
                     .setTitle('Already Authenticated')
-                    .setDescription(`You are already logged in as ${row.lastFmUsername}!`)
+                    .setDescription(`You are already logged in BUD! as ${row.lastFmUsername}!`)
                     .setTimestamp()
                     .setFooter({ text: 'Last.fm Authentication', iconURL: image });
 
