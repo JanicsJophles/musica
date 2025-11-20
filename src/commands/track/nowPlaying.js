@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
+const { SlashCommandBuilder } = require('discord.js');
 const axios = require('axios');
 const db = require('../../database');
 const { EmbedBuilder } = require('discord.js');
@@ -76,8 +76,8 @@ module.exports = {
                         return;
                     }
 
-                    // Use the Last.fm username for API request
-                    userData = await getUserData(discordUserId);
+                    // Use the Last.fm username directly for API request
+                    userData = { lastFmUsername: user.name };
                     targetUser = { username: user.name }; // Use Last.fm username directly
                 } catch (error) {
                     console.error('Error fetching Last.fm user:', error);
@@ -107,12 +107,13 @@ module.exports = {
             const encodedParams = new URLSearchParams(params);
 
             const response = await axios.get(`https://ws.audioscrobbler.com/2.0/?${encodedParams}`);
-            const track = response.data.recenttracks.track[0];
-
-            if (!track) {
+            
+            if (!response.data.recenttracks || !response.data.recenttracks.track || response.data.recenttracks.track.length === 0) {
                 await interaction.reply('No recent tracks found.');
                 return;
             }
+            
+            const track = response.data.recenttracks.track[0];
 
             const { artist, name, album, date } = track;
             const scrobblesResponse = await axios.get(`https://ws.audioscrobbler.com/2.0/?method=user.getInfo&user=${userData.lastFmUsername}&api_key=${LASTFM_API_KEY}&format=json`);

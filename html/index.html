@@ -17,49 +17,95 @@
     <div id="app-bar-container"></div>
 
     <div class="container index-container">
-        <h1>Welcome to Musica Bot</h1>
-        <p>Your favorite music companion on Discord!</p>
-        <a href="https://discord.com/oauth2/authorize?client_id=1259560080886599752" class="invite-btn">Invite Bot</a>
+        <div class="hero-section">
+            <h1>Welcome to Musica Bot</h1>
+            <p class="hero-subtitle">Your favorite music companion on Discord! Connect with Last.fm and share your music taste with friends.</p>
+            <a href="https://discord.com/oauth2/authorize?client_id=1259560080886599752" class="invite-btn">🎵 Invite Bot to Discord</a>
+        </div>
 
         <section class="features">
             <h2>Main Features</h2>
             <ul>
-                <li>Show your friends what you're listening to by using <code>/fm</code></li>
-                <li>Customize your <code>/fm</code> to make it unique with <code>/mode</code></li>
-                <li>Generate advanced image charts based on your listening history</li>
-                <li>Easily see genre and country info for your favorite artists</li>
-                <li>Get the Spotify, YouTube, or Genius link for any song</li>
-                <li>View all your Last.fm statistics through deep integration with Last.fm</li>
-                <li>Scrobble songs that other Discord bots are playing to your Last.fm account with our Music Bot Scrobbling</li>
-                <li>View and show off your Discogs collection</li>
+                <li>Show your friends what you're listening to by using <code>/now-playing</code></li>
+                <li>Search for tracks, artists, and albums with <code>/track-search</code>, <code>/search-artist</code>, and <code>/search-album</code></li>
+                <li>Get detailed information about any track, artist, or album</li>
+                <li>View your top tracks, artists, and albums from Last.fm</li>
+                <li>Discover similar artists and tracks</li>
+                <li>View global and country-specific music charts</li>
+                <li>Track your weekly listening habits</li>
+                <li>See your loved tracks and scrobbles</li>
             </ul>
         </section>
 
         <section class="social-features">
-            <h2>Social Features</h2>
-            <ul>
-                <li>Use <code>/WhoKnows</code> in your server to see top listeners for artists and compete for crowns!</li>
-                <li>See what music is trending in your server for various time periods with our <code>/server</code> commands</li>
-                <li>Compare your taste with others and see who has the most similar music taste</li>
-                <li>Add friends and see what they've been listening to in <code>/friends</code></li>
-                <li>See how you stack up against anyone in the bot with our global commands</li>
-                <li>Use the affinity command to see who's taste is most similar to you</li>
-                <li>Play the jumble games together with friends</li>
-            </ul>
+            <h2>Commands Available</h2>
+            <div class="commands-grid">
+                <div class="command-category">
+                    <h3>🎵 Track Commands</h3>
+                    <ul>
+                        <li><code>/now-playing</code> - See what you're currently listening to</li>
+                        <li><code>/track-info</code> - Get detailed track information</li>
+                        <li><code>/track-search</code> - Search for tracks</li>
+                        <li><code>/similar-songs</code> - Find similar tracks</li>
+                    </ul>
+                </div>
+                <div class="command-category">
+                    <h3>🎤 Artist Commands</h3>
+                    <ul>
+                        <li><code>/artist-info</code> - Get artist information</li>
+                        <li><code>/search-artist</code> - Search for artists</li>
+                        <li><code>/artist-top-tracks</code> - View artist's top tracks</li>
+                        <li><code>/artist-top-albums</code> - View artist's top albums</li>
+                        <li><code>/similar-artists-from-artist</code> - Find similar artists</li>
+                    </ul>
+                </div>
+                <div class="command-category">
+                    <h3>💿 Album Commands</h3>
+                    <ul>
+                        <li><code>/album-info</code> - Get album information</li>
+                        <li><code>/search-album</code> - Search for albums</li>
+                    </ul>
+                </div>
+                <div class="command-category">
+                    <h3>👤 User Commands</h3>
+                    <ul>
+                        <li><code>/user-info</code> - View Last.fm user profile</li>
+                        <li><code>/user-top-tracks</code> - View user's top tracks</li>
+                        <li><code>/user-top-artists</code> - View user's top artists</li>
+                        <li><code>/user-top-albums</code> - View user's top albums</li>
+                        <li><code>/user-loved-tracks</code> - View loved tracks</li>
+                        <li><code>/user-weekly-track-chart</code> - Weekly track charts</li>
+                    </ul>
+                </div>
+                <div class="command-category">
+                    <h3>📊 Chart Commands</h3>
+                    <ul>
+                        <li><code>/global-top-tracks</code> - Global top tracks</li>
+                        <li><code>/global-top-artists</code> - Global top artists</li>
+                        <li><code>/country-top-tracks</code> - Country-specific tracks</li>
+                        <li><code>/country-top-artists</code> - Country-specific artists</li>
+                    </ul>
+                </div>
+                <div class="command-category">
+                    <h3>🔐 Authentication</h3>
+                    <ul>
+                        <li><code>/login</code> - Connect your Last.fm account</li>
+                    </ul>
+                </div>
+            </div>
         </section>
 
         <section class="featured">
-            <h2>Featured</h2>
-            <p>Every hour we feature a random user with something they've recently listened to. Everyone is able to see this using the <code>/featured</code> command, and anyone who recently used the bot gets a chance to become featured!</p>
-            <p>The bot will also change its profile picture to the album cover of the feature. Want to be alerted when you get featured? Join our server and you'll get a ping.</p>
+            <h2>Get Started</h2>
+            <p>To start using Musica Bot, simply invite it to your Discord server and use the <code>/login</code> command to connect your Last.fm account. Once authenticated, you can start exploring all the amazing features!</p>
+            <p>Musica Bot integrates seamlessly with Last.fm to bring you the best music discovery and sharing experience on Discord.</p>
         </section>
 
         <section class="links">
             <h2>Links</h2>
-            <ul>
-                <a href="https://krishanator.com"
-                    class="invite-btn" >The Creator's Portfolio</a>
-            </ul>
+            <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                <a href="https://krishanator.com" class="invite-btn">The Creator's Portfolio</a>
+            </div>
         </section>
     </div>
 

@@ -1,8 +1,9 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
+const { SlashCommandBuilder } = require('discord.js');
 const axios = require('axios');
 const { EmbedBuilder } = require('discord.js');
 require('dotenv').config();
 
+const LASTFM_API_KEY = process.env.LASTFM_API_KEY;
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -36,7 +37,7 @@ module.exports = {
                 .setTitle(`${username}'s Weekly Chart List`)
                 .setDescription(`Here are the available weekly charts for ${username}`)
                 .setURL(`https://www.last.fm/user/${encodeURIComponent(username)}/charts`)
-                .setColor('RANDOM');
+                .setColor('Random');
 
             weeklyChartList.forEach((chart) => {
                 embed.addFields({

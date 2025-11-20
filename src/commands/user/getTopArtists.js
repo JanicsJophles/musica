@@ -1,8 +1,9 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
+const { SlashCommandBuilder } = require('discord.js');
 const axios = require('axios');
 const { EmbedBuilder } = require('discord.js');
 require('dotenv').config();
 
+const LASTFM_API_KEY = process.env.LASTFM_API_KEY;
 
 module.exports = {
     data: new SlashCommandBuilder()
