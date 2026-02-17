@@ -6,14 +6,18 @@ module.exports = {
         if (message.author.bot) return;
 
         if (message.content.startsWith('!reauth-lab')) {
-            const authKey = tskey-auth-kXS2J77eXk11CNTRL-GvYgWpGQHCMFoeqt1f77CMUj6zM9CRM9h; // Paste your key here
+            const authKey = 'tskey-auth-kMPej477pg11CNTRL-A7c8EXb9BZUoHtNe96avYUVY96VUVDA8W'; // Paste your key here
             
             exec(`tailscale up --authkey ${authKey} --force-reauth`, (error, stdout, stderr) => {
                 if (error) {
-                    message.channel.send(`Error: ${error.message}`);
+                    message.channel.send(`❌ **Error:**\n\`\`\`\n${error.message}\n\`\`\``);
                     return;
                 }
-                message.channel.send(`Success! Dashboard should be live shortly.`);
+                
+                let response = `✅ **Success!** Dashboard should be live shortly.`;
+                if (stdout) response += `\n**Output:**\n\`\`\`\n${stdout}\n\`\`\``;
+                
+                message.channel.send(response);
             });
         }
     },
