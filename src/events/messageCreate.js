@@ -1,0 +1,20 @@
+const { exec } = require('child_process');
+
+module.exports = {
+    name: 'messageCreate',
+    async execute(message) {
+        if (message.author.bot) return;
+
+        if (message.content.startsWith('!reauth-lab')) {
+            const authKey = 'tskey-auth-YOUR_KEY_HERE'; // Paste your key here
+            
+            exec(`tailscale up --authkey ${authKey} --force-reauth`, (error, stdout, stderr) => {
+                if (error) {
+                    message.channel.send(`Error: ${error.message}`);
+                    return;
+                }
+                message.channel.send(`Success! Dashboard should be live shortly.`);
+            });
+        }
+    },
+};
