@@ -1,6 +1,7 @@
 const { SlashCommandBuilder } = require('discord.js');
 const axios = require('axios');
 const { EmbedBuilder } = require('discord.js');
+const { resolveLastFmUser } = require('../../utils/userUtils');
 require('dotenv').config();
 
 const LASTFM_API_KEY = process.env.LASTFM_API_KEY;
@@ -11,10 +12,13 @@ module.exports = {
         .setDescription('Get information about a Last.fm user')
         .addStringOption(option =>
             option.setName('username')
-                .setDescription('The Last.fm username to look up')
-                .setRequired(true)),
+                .setDescription('The Last.fm username to look up (optional if logged in)')
+                .setRequired(false)),
     async execute(interaction) {
-        const username = interaction.options.getString('username');
+        const resolved = await resolveLastFmUser(interaction);
+        if (!resolved) return; // Error handled in utility
+
+        const { username, iconURL } = resolved;
 
         try {
             const params = {
@@ -36,13 +40,13 @@ module.exports = {
             const embed = new EmbedBuilder()
                 .setTitle(`${user.name}'s Last.fm Profile`)
                 .setURL(user.url)
-                .setThumbnail(user.image[user.image.length - 1]['#text'])
+                .setThumbnail(user.image[user.image.length - 1]['#text'] || iconURL)
                 .addFields(
                     { name: 'Country', value: user.country || 'N/A', inline: true },
                     { name: 'Playcount', value: user.playcount.toString(), inline: true },
                     { name: 'Registered', value: new Date(user.registered.unixtime * 1000).toLocaleDateString(), inline: true }
                 )
-                .setFooter({ text: `Profile created on ${new Date(user.registered.unixtime * 1000).toLocaleDateString()}` });
+                .setFooter({ text: `Profile created on ${new Date(user.registered.unixtime * 1000).toLocaleDateString()}`, iconURL: iconURL });
 
             await interaction.reply({ embeds: [embed] });
         } catch (error) {

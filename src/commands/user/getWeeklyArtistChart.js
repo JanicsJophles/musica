@@ -1,6 +1,7 @@
 const { SlashCommandBuilder } = require('discord.js');
 const axios = require('axios');
 const { EmbedBuilder } = require('discord.js');
+const { resolveLastFmUser } = require('../../utils/userUtils');
 require('dotenv').config();
 
 const LASTFM_API_KEY = process.env.LASTFM_API_KEY;
@@ -11,14 +12,17 @@ module.exports = {
         .setDescription('Get the weekly artist chart for a Last.fm user')
         .addStringOption(option =>
             option.setName('username')
-                .setDescription('The Last.fm username to look up')
-                .setRequired(true))
+                .setDescription('The Last.fm username to look up (optional if logged in)')
+                .setRequired(false))
         .addIntegerOption(option =>
             option.setName('limit')
                 .setDescription('Number of top artists to display (default is 5)')
                 .setRequired(false)),
     async execute(interaction) {
-        const username = interaction.options.getString('username');
+        const resolved = await resolveLastFmUser(interaction);
+        if (!resolved) return;
+
+        const { username, iconURL } = resolved;
         const limit = interaction.options.getInteger('limit') || 5;
 
         try {
@@ -42,7 +46,13 @@ module.exports = {
             const embed = new EmbedBuilder()
                 .setTitle(`${username}'s Weekly Artist Chart`)
                 .setURL(`https://www.last.fm/user/${encodeURIComponent(username)}/charts?rangetype=weekly&subtype=artists`)
-                .setThumbnail(weeklyArtistChart[0].image[weeklyArtistChart[0].image.length - 1]['#text']);
+                .setFooter({ text: 'Last.fm Weekly Artist Chart', iconURL: iconURL });
+
+            if (weeklyArtistChart[0].image && weeklyArtistChart[0].image.length > 0) {
+                 embed.setThumbnail(weeklyArtistChart[0].image[weeklyArtistChart[0].image.length - 1]['#text']);
+            } else {
+                 embed.setThumbnail(iconURL);
+            }
 
             weeklyArtistChart.forEach((artist) => {
                 embed.addFields({
