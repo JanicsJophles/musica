@@ -1,3 +1,4 @@
 node_modules
 .env
 src/musica.db
+src/events/messageCreate.js

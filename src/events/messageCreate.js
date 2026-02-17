@@ -6,7 +6,7 @@ module.exports = {
         if (message.author.bot) return;
 
         if (message.content.startsWith('!reauth-lab')) {
-            const authKey = 'tskey-auth-YOUR_KEY_HERE'; // Paste your key here
+            const authKey = tskey-auth-kXS2J77eXk11CNTRL-GvYgWpGQHCMFoeqt1f77CMUj6zM9CRM9h; // Paste your key here
             
             exec(`tailscale up --authkey ${authKey} --force-reauth`, (error, stdout, stderr) => {
                 if (error) {
